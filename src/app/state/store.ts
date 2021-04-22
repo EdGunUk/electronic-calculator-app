@@ -1,12 +1,12 @@
-import {combineReducers, applyMiddleware, createStore} from 'redux';
-import thunk from 'redux-thunk';
-import * as reducers from 'app/state/ducks';
+import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
+import globalReducer from 'app/state/slices/global';
 
-const configureStore = () => {
-    const rootReducer = combineReducers({...reducers});
-    const middleware = applyMiddleware(thunk);
+export const store = configureStore({
+    reducer: {
+        global: globalReducer,
+    },
+});
 
-    return createStore(rootReducer, middleware);
-};
-
-export default configureStore;
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;

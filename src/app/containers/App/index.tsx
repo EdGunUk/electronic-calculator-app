@@ -1,5 +1,5 @@
-import LoaderGlobal from 'app/components/Loader/loaderGlobal';
 import React from 'react';
+import LoaderGlobal from 'app/components/Loader/loaderGlobal';
 
 function App() {
     return (
