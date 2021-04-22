@@ -1,5 +1,17 @@
+export const ANZAC = '#e5b052';
+export const BLACK = '#000000';
+export const SIENNA_01 = '#ec4f4f';
+export const SIENNA_02 = '#ed6d6d';
+export const CAPE_COD = '#353E3C';
 export const DOVE_GRAY = '#717171';
 export const DUSTY_GRAY = '#9b9b9b';
 export const EMERALD = '#63d194';
 export const GALLERY = '#f0eeee';
 export const JAVA = '#24c5b5';
+export const SPACE_01 = '#2B3131';
+export const SPACE_02 = '#1d2626';
+export const RED_DAMASK = '#dd7e3f';
+export const SHAMROCK = '#36d793';
+export const TUNA = '#383839';
+export const VISTA_BLUE = '#7bd5a2';
+export const WHITE = '#ffffff';
