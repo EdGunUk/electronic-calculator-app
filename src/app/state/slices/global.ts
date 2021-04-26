@@ -11,10 +11,16 @@ interface RemoveNotificationAction {
     id: string;
 }
 
-interface NotificationState {
+export interface NotificationState {
     type: string;
     message: string;
     id: string;
+}
+
+enum NotificationTypes {
+    success = 'SUCCESS',
+    failed = 'FAILED',
+    info = 'INFO',
 }
 
 interface GlobalState {
@@ -35,7 +41,7 @@ const globalSlice = createSlice({
             // eslint-disable-next-line no-param-reassign
             state.isAppLoaded = true;
         },
-        setNotification: (state, action: PayloadAction<SetNotificationAction>) => {
+        setAppNotification: (state, action: PayloadAction<SetNotificationAction>) => {
             const {type, message} = action.payload;
             const {notifications} = state;
 
@@ -46,10 +52,9 @@ const globalSlice = createSlice({
                 type,
                 message,
             };
-
             notifications.push(notification);
         },
-        removeNotification: (state, action: PayloadAction<RemoveNotificationAction>) => {
+        removeAppNotification: (state, action: PayloadAction<RemoveNotificationAction>) => {
             const {id} = action.payload;
 
             // eslint-disable-next-line no-param-reassign
@@ -58,8 +63,19 @@ const globalSlice = createSlice({
     },
 });
 
-export const {setIsAppLoaded} = globalSlice.actions;
+export const {setIsAppLoaded, setAppNotification, removeAppNotification} = globalSlice.actions;
+
+export const setNotificationSuccess = (message: string) =>
+    setAppNotification({message, type: NotificationTypes.success});
+
+export const setNotificationFailed = (message: string) => setAppNotification({message, type: NotificationTypes.failed});
+
+export const setNotificationInfo = (message: string) => setAppNotification({message, type: NotificationTypes.info});
+
+export const removeNotification = (id: string) => removeAppNotification({id});
 
 export const selectIsAppLoaded = (state: RootState): boolean => state.global.isAppLoaded;
+
+export const selectNotifications = (state: RootState): NotificationState[] => state.global.notifications;
 
 export default globalSlice.reducer;

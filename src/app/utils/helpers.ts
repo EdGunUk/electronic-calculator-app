@@ -1,6 +1,6 @@
-import uuid from 'uuid';
+import {v4} from 'uuid';
 
-const getId = (): string => uuid.v4();
+const getId = (): string => v4();
 
 export default {
     getId,
