@@ -4,11 +4,14 @@ import App from 'app/containers/App/app';
 import {Provider} from 'react-redux';
 import {store} from 'app/state/store';
 import GlobalStyle from 'app/styled/global';
+import {LocalizeProvider} from 'react-localize-redux';
 
 ReactDOM.render(
     <Provider store={store}>
-        <GlobalStyle />
-        <App />
+        <LocalizeProvider>
+            <GlobalStyle />
+            <App />
+        </LocalizeProvider>
     </Provider>,
     document.getElementById('root')
 );
