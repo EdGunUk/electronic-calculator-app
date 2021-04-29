@@ -2,18 +2,12 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from 'app/state/store';
 import helpers from 'app/utils/helpers';
 
-interface SetNotificationAction {
+interface NotificationAction {
     type: string;
     message: string;
 }
 
-interface RemoveNotificationAction {
-    id: string;
-}
-
-export interface NotificationState {
-    type: string;
-    message: string;
+export interface NotificationState extends NotificationAction {
     id: string;
 }
 
@@ -26,11 +20,13 @@ enum NotificationTypes {
 interface GlobalState {
     isAppLoaded: boolean;
     notifications: NotificationState[];
+    languageCode: string;
 }
 
 const initialState: GlobalState = {
     isAppLoaded: false,
     notifications: [],
+    languageCode: 'ru-ru',
 };
 
 const globalSlice = createSlice({
@@ -41,7 +37,11 @@ const globalSlice = createSlice({
             // eslint-disable-next-line no-param-reassign
             state.isAppLoaded = true;
         },
-        setAppNotification: (state, action: PayloadAction<SetNotificationAction>) => {
+        setLanguageCode: (state, action: PayloadAction<string>) => {
+            // eslint-disable-next-line no-param-reassign
+            state.languageCode = action.payload;
+        },
+        setNotification: (state, action: PayloadAction<NotificationAction>) => {
             const {type, message} = action.payload;
             const {notifications} = state;
 
@@ -54,8 +54,8 @@ const globalSlice = createSlice({
             };
             notifications.push(notification);
         },
-        removeAppNotification: (state, action: PayloadAction<RemoveNotificationAction>) => {
-            const {id} = action.payload;
+        removeNotification: (state, action: PayloadAction<string>) => {
+            const id = action.payload;
 
             // eslint-disable-next-line no-param-reassign
             state.notifications = state.notifications.filter((notification) => notification.id !== id);
@@ -63,18 +63,17 @@ const globalSlice = createSlice({
     },
 });
 
-export const {setIsAppLoaded, setAppNotification, removeAppNotification} = globalSlice.actions;
+export const {setIsAppLoaded, setLanguageCode, setNotification, removeNotification} = globalSlice.actions;
 
-export const setNotificationSuccess = (message: string) =>
-    setAppNotification({message, type: NotificationTypes.success});
+export const setNotificationSuccess = (message: string) => setNotification({message, type: NotificationTypes.success});
 
-export const setNotificationFailed = (message: string) => setAppNotification({message, type: NotificationTypes.failed});
+export const setNotificationFailed = (message: string) => setNotification({message, type: NotificationTypes.failed});
 
-export const setNotificationInfo = (message: string) => setAppNotification({message, type: NotificationTypes.info});
-
-export const removeNotification = (id: string) => removeAppNotification({id});
+export const setNotificationInfo = (message: string) => setNotification({message, type: NotificationTypes.info});
 
 export const selectIsAppLoaded = (state: RootState): boolean => state.global.isAppLoaded;
+
+export const selectLanguageCode = (state: RootState): string => state.global.languageCode;
 
 export const selectNotifications = (state: RootState): NotificationState[] => state.global.notifications;
 
