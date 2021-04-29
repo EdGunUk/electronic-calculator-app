@@ -1,36 +1,56 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {ReactElement, useEffect, useMemo} from 'react';
+import React, {ReactElement, useEffect} from 'react';
 import LoaderGlobal from 'app/components/Loader/loaderGlobal';
 import useDispatch from 'app/hooks/useDispatch';
 import useSelector from 'app/hooks/useSelector';
 import {selectIsAppLoaded, setIsAppLoaded, setNotificationSuccess} from 'app/state/slices/global';
 import Notifications from 'app/containers/Notifications/notifications';
 import {withLocalize} from 'react-localize-redux';
-import {initLocalization} from 'app/services/localization';
+import {renderToStaticMarkup} from 'react-dom/server';
 
-const App = ({translate}: any): ReactElement => {
+const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translate}: any): ReactElement => {
     const dispatch = useDispatch();
     const isAppLoaded = useSelector(selectIsAppLoaded);
 
+    const fetchLocalization = async (languageCode: any) => {
+        const data = (
+            await import(/* webpackChunkName: "lazy-chunk.1" */ `app/assets/localizations/${languageCode}.json`)
+        ).default;
+
+        addTranslationForLanguage(data, languageCode);
+        setActiveLanguage(languageCode);
+    };
+
+    const initLocalization = async () => {
+        const languages = [
+            {name: 'eng', code: 'en-gb'},
+            {name: 'рус', code: 'ru-ru'},
+        ];
+
+        const defaultLanguageCode = languages[0].code;
+
+        initialize({
+            languages,
+            options: {
+                defaultLanguage: defaultLanguageCode,
+                renderInnerHtml: true,
+                renderToStaticMarkup,
+            },
+        });
+
+        await fetchLocalization(defaultLanguageCode);
+        dispatch(setIsAppLoaded());
+    };
+
     useEffect(() => {
         initLocalization();
-        dispatch(setIsAppLoaded());
     }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            dispatch(setIsAppLoaded());
             dispatch(setNotificationSuccess('app success loaded'));
-        }, 1000);
-
-        return () => clearTimeout(timer);
-    }, [dispatch]);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            dispatch(setIsAppLoaded());
-            dispatch(setNotificationSuccess('app success loaded'));
-        }, 1000);
+            fetchLocalization('ru-ru');
+        }, 2000);
 
         return () => clearTimeout(timer);
     }, [dispatch]);
