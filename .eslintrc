@@ -15,7 +15,7 @@
         "plugin:jest/recommended",
         "plugin:prettier/recommended"
     ],
-    "plugins": ["react", "@typescript-eslint", "jest"],
+    "plugins": ["react", "@typescript-eslint", "jest", "simple-import-sort"],
     "rules": {
         "linebreak-style": "off",
         "prettier/prettier": [
@@ -23,7 +23,9 @@
             {
                 "endOfLine": "auto"
             }
-        ]
+        ],
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error"
     },
     "env": {
         "browser": true,

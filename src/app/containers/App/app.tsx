@@ -1,19 +1,19 @@
-import React, {ReactElement, useEffect} from 'react';
+import localizationSettings from 'app/assets/localizations/settings.json';
 import LoaderGlobal from 'app/components/Loader/loaderGlobal';
+import Notifications from 'app/containers/Notifications/notifications';
+import useDidUpdate from 'app/hooks/useDidUpdate';
 import useDispatch from 'app/hooks/useDispatch';
 import useSelector from 'app/hooks/useSelector';
 import {
     selectIsAppLoaded,
-    setIsAppLoaded,
     selectLanguageCode,
+    setIsAppLoaded,
     setLanguageCode,
     setNotificationSuccess,
 } from 'app/state/slices/global';
-import Notifications from 'app/containers/Notifications/notifications';
-import {withLocalize} from 'react-localize-redux';
+import React, {ReactElement, useEffect} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import localizationSettings from 'app/assets/localizations/settings.json';
-import useDidUpdate from 'app/hooks/useDidUpdate';
+import {withLocalize} from 'react-localize-redux';
 
 const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translate}: any): ReactElement => {
     const dispatch = useDispatch();

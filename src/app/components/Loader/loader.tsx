@@ -1,5 +1,5 @@
-import React, {ReactElement} from 'react';
 import {LoaderStyled} from 'app/components/Loader/styled';
+import React, {ReactElement} from 'react';
 
 const Loader = (): ReactElement => {
     return (
