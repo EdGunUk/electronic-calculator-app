@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import * as colors from 'app/styled/settings/colors';
+import styled from 'styled-components';
 
 const LoaderWrapper = styled.div`
     width: 100vw;
@@ -109,4 +109,4 @@ const LoaderStyled = styled.div`
     }
 `;
 
-export {LoaderWrapper, LoaderStyled};
+export {LoaderStyled, LoaderWrapper};

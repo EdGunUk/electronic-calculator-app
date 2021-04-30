@@ -1,7 +1,3 @@
-import {createGlobalStyle} from 'styled-components';
-import * as colors from 'app/styled/settings/colors';
-import * as fonts from 'app/styled/settings/fonts';
-import fontFace from 'app/styled/tools/fontFace';
 import RobotoBlack from 'app/assets/fonts/Roboto-Black.woff';
 import RobotoBlack2 from 'app/assets/fonts/Roboto-Black.woff2';
 import RobotoMedium from 'app/assets/fonts/Roboto-Medium.woff';
@@ -10,6 +6,10 @@ import RobotoRegular from 'app/assets/fonts/Roboto-Regular.woff';
 import RobotoRegular2 from 'app/assets/fonts/Roboto-Regular.woff2';
 import RobotoThin from 'app/assets/fonts/Roboto-Thin.woff';
 import RobotoThin2 from 'app/assets/fonts/Roboto-Thin.woff2';
+import * as colors from 'app/styled/settings/colors';
+import * as fonts from 'app/styled/settings/fonts';
+import fontFace from 'app/styled/tools/fontFace';
+import {createGlobalStyle} from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
     * {

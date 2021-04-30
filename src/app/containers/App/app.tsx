@@ -4,6 +4,7 @@ import Notifications from 'app/containers/Notifications/notifications';
 import useDidUpdate from 'app/hooks/useDidUpdate';
 import useDispatch from 'app/hooks/useDispatch';
 import useSelector from 'app/hooks/useSelector';
+import * as storageService from 'app/services/storage/storageService';
 import {
     selectIsAppLoaded,
     selectLanguageCode,
@@ -28,8 +29,7 @@ const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translat
     };
 
     const changeLocalization = (defaultLanguage: any) => {
-        // TODO: add language to localStorage
-
+        storageService.setLanguageCode(defaultLanguage);
         fetchLocalization(defaultLanguage);
     };
 
@@ -58,7 +58,7 @@ const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translat
     useEffect(() => {
         const timer = setTimeout(() => {
             dispatch(setNotificationSuccess('app success loaded'));
-            dispatch(setLanguageCode('en-gb'));
+            dispatch(setLanguageCode('ru-ru'));
         }, 2000);
 
         return () => clearTimeout(timer);

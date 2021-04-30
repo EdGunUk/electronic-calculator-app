@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import * as storageService from 'app/services/storage/storageService';
 import {RootState} from 'app/state/store';
 import helpers from 'app/utils/helpers';
 
@@ -26,7 +27,7 @@ interface GlobalState {
 const initialState: GlobalState = {
     isAppLoaded: false,
     notifications: [],
-    languageCode: 'ru-ru',
+    languageCode: storageService.getLanguageCode(),
 };
 
 const globalSlice = createSlice({
