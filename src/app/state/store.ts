@@ -1,9 +1,9 @@
 import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit';
-import globalReducer from 'app/state/slices/global';
+import globalSlice from 'app/state/slices/global';
 
 export const store = configureStore({
     reducer: {
-        global: globalReducer,
+        global: globalSlice.reducer,
     },
 });
 

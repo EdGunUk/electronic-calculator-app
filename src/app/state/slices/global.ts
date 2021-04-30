@@ -1,28 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import * as storageService from 'app/services/storage/storageService';
-import {RootState} from 'app/state/store';
+import {GlobalState, NotificationAction} from 'app/state/types/global';
 import helpers from 'app/utils/helpers';
-
-interface NotificationAction {
-    type: string;
-    message: string;
-}
-
-export interface NotificationState extends NotificationAction {
-    id: string;
-}
-
-enum NotificationTypes {
-    success = 'SUCCESS',
-    failed = 'FAILED',
-    info = 'INFO',
-}
-
-interface GlobalState {
-    isAppLoaded: boolean;
-    notifications: NotificationState[];
-    languageCode: string;
-}
 
 const initialState: GlobalState = {
     isAppLoaded: false,
@@ -64,18 +43,4 @@ const globalSlice = createSlice({
     },
 });
 
-export const {setIsAppLoaded, setLanguageCode, setNotification, removeNotification} = globalSlice.actions;
-
-export const setNotificationSuccess = (message: string) => setNotification({message, type: NotificationTypes.success});
-
-export const setNotificationFailed = (message: string) => setNotification({message, type: NotificationTypes.failed});
-
-export const setNotificationInfo = (message: string) => setNotification({message, type: NotificationTypes.info});
-
-export const selectIsAppLoaded = (state: RootState): boolean => state.global.isAppLoaded;
-
-export const selectLanguageCode = (state: RootState): string => state.global.languageCode;
-
-export const selectNotifications = (state: RootState): NotificationState[] => state.global.notifications;
-
-export default globalSlice.reducer;
+export default globalSlice;

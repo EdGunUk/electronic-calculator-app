@@ -5,13 +5,8 @@ import useDidUpdate from 'app/hooks/useDidUpdate';
 import useDispatch from 'app/hooks/useDispatch';
 import useSelector from 'app/hooks/useSelector';
 import * as storageService from 'app/services/storage/storageService';
-import {
-    selectIsAppLoaded,
-    selectLanguageCode,
-    setIsAppLoaded,
-    setLanguageCode,
-    setNotificationSuccess,
-} from 'app/state/slices/global';
+import {setIsAppLoaded, setNotificationSuccess} from 'app/state/actions/global';
+import {selectIsAppLoaded, selectLanguageCode} from 'app/state/selectors/global';
 import React, {ReactElement, useEffect} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {withLocalize} from 'react-localize-redux';
@@ -58,7 +53,6 @@ const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translat
     useEffect(() => {
         const timer = setTimeout(() => {
             dispatch(setNotificationSuccess('app success loaded'));
-            dispatch(setLanguageCode('ru-ru'));
         }, 2000);
 
         return () => clearTimeout(timer);

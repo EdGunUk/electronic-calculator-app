@@ -1,6 +1,6 @@
 import Notification from 'app/containers/Notifications/Notification/notification';
 import useSelector from 'app/hooks/useSelector';
-import {selectNotifications} from 'app/state/slices/global';
+import {selectNotifications} from 'app/state/selectors/global';
 import React, {ReactElement} from 'react';
 
 const Notifications = (): ReactElement => {

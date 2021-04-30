@@ -1,5 +1,6 @@
 import useDispatch from 'app/hooks/useDispatch';
-import {NotificationState, removeNotification} from 'app/state/slices/global';
+import {removeNotification} from 'app/state/actions/global';
+import {NotificationState} from 'app/state/types/global';
 import React, {ReactElement, useEffect} from 'react';
 
 interface Props {
