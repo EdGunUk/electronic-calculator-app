@@ -1,16 +1,21 @@
 import localizationSettings from 'app/assets/localizations/settings.json';
 import storageService from 'app/services/storage/storageService';
 
-const getLanguages = () => {
+interface Language {
+    name: string;
+    code: string;
+}
+
+const getLanguages = (): Language[] => {
     return localizationSettings.languages;
 };
 
-const getDefaultLanguageCode = () => {
+const getDefaultLanguageCode = (): string => {
     const languages = getLanguages();
     return languages[0].code;
 };
 
-const getInitialLanguageCode = () => {
+const getInitialLanguageCode = (): string => {
     let currentLanguageCode = storageService.getLanguageCode();
 
     if (!currentLanguageCode) {
