@@ -1,12 +1,8 @@
 import localizationSettings from 'app/assets/localizations/settings.json';
 import storageService from 'app/services/storage/storageService';
+import {NamedLanguage} from 'react-localize-redux';
 
-interface Language {
-    name: string;
-    code: string;
-}
-
-const getLanguages = (): Language[] => {
+const getLanguages = (): NamedLanguage[] => {
     return localizationSettings.languages;
 };
 

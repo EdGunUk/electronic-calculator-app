@@ -9,21 +9,28 @@ import {setIsAppLoaded, setLanguageCode, setNotificationSuccess} from 'app/state
 import {selectIsAppLoaded, selectLanguageCode} from 'app/state/selectors/global';
 import React, {ReactElement, useEffect} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {withLocalize} from 'react-localize-redux';
+import {InitializePayload, SingleLanguageTranslation, TranslateFunction, withLocalize} from 'react-localize-redux';
 
-const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translate}: any): ReactElement => {
+interface Props {
+    initialize: (payload: InitializePayload) => void;
+    addTranslationForLanguage: (translation: SingleLanguageTranslation, language: string) => void;
+    setActiveLanguage: (languageCode: string) => void;
+    translate: TranslateFunction;
+}
+
+const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translate}: Props): ReactElement => {
     const dispatch = useDispatch();
     const isAppLoaded = useSelector(selectIsAppLoaded);
     const currentLanguageCode = useSelector(selectLanguageCode);
 
-    const fetchLocalization = async (languageCode: any) => {
+    const fetchLocalization = async (languageCode: string) => {
         const data = (await import(`app/assets/localizations/${languageCode}.json`)).default;
 
         addTranslationForLanguage(data, languageCode);
         setActiveLanguage(languageCode);
     };
 
-    const changeLocalization = (languageCode: any) => {
+    const changeLocalization = (languageCode: string) => {
         storageService.setLanguageCode(languageCode);
         fetchLocalization(languageCode);
     };
@@ -37,7 +44,7 @@ const App = ({initialize, addTranslationForLanguage, setActiveLanguage, translat
                 defaultLanguage: defaultLanguageCode,
                 renderInnerHtml: true,
                 renderToStaticMarkup,
-                onMissingTranslation: ({defaultTranslation}: any) => defaultTranslation,
+                onMissingTranslation: ({defaultTranslation}) => defaultTranslation,
             },
         });
 
